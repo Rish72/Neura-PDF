@@ -4,6 +4,7 @@ import "./globals.css";
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
+import { neobrutalism } from "@clerk/themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider afterSignOutUrl="/">
+    <ClerkProvider afterSignOutUrl="/"
+    appearance={{
+      baseTheme : neobrutalism
+    }}>
       <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
