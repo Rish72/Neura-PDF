@@ -1,5 +1,5 @@
 "use client";
-import { uploadToS3 } from "@/lib/s3";
+import { uploadToS3 } from "@/lib/db/s3";
 import { useMutation } from "@tanstack/react-query";
 import { Inbox, Loader2 } from "lucide-react";
 import React, { useState } from "react";
@@ -46,7 +46,8 @@ const FileUpload = () => {
         } else {
           mutate(data, {
             onSuccess: (data) => {
-              toast.success(data.message)
+              console.log("data onSuccess : ",data)
+              // toast.success(data.message)
             },
             onError: (err) => {
               toast.error("Something went wrong while mutating");
