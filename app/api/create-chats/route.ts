@@ -5,7 +5,7 @@ import { chats } from "@/lib/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
 
   const {userId} = await auth()
   console.log("route post request userId from clerk : ",userId);

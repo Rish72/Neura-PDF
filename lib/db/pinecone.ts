@@ -82,7 +82,8 @@ async function embedDocument(doc: Document) {
 }
 
 async function prepareDocument(pdfpage: PDFPage) {
-  let { pageContent, metadata } = pdfpage;
+  let { pageContent } = pdfpage;
+  const {metadata} = pdfpage;
   pageContent = pageContent.replace(/\n/g, "");
 
   //split the do
