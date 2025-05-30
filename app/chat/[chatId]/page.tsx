@@ -1,4 +1,5 @@
 import ChatSideBar from "@/components/ChatSideBar";
+import ChatComponent from "@/components/ChatComponent";
 import PDFViewer from "@/components/PDFViewer";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
@@ -16,6 +17,7 @@ type Props = {
 const ChatPage = async ({ params }: Props) => {
   const { chatId } = await params;
   const { userId } = await auth();
+  
   if (!userId) {
     return redirect("/sign-in");
   }
@@ -31,7 +33,6 @@ const ChatPage = async ({ params }: Props) => {
   console.log("currentchat url ",currentChat?.pdfUrl)
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Removed overflow-scroll */}
       <div className="flex w-full h-full">
         {/* chat sidebar */}
         <div className="flex-[2] max-w-xs h-full">
@@ -43,7 +44,7 @@ const ChatPage = async ({ params }: Props) => {
         </div>
         {/* chat component */}
         <div className="flex-[3] border-l-4 border-l-slate-200 overflow-auto">
-          {/* <ChatComponent chatId={parseInt(chatId)} /> */}
+          <ChatComponent chatId={parseInt(chatId)} />
         </div>
       </div>
     </div>

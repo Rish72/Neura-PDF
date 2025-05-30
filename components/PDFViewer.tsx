@@ -5,8 +5,10 @@ type Props = {
 }
 
 const PDFViewer = ({pdf_url}: Props) => {
+    const docs_url = `https://docs.google.com/gview?url=${pdf_url}&embedded=true`
+    
   return (
-    <iframe className='w-full h-full' src={`https://docs.google.com/gview?url=${pdf_url}&embedded=true`}>
+    <iframe className='w-full h-full' src={docs_url}>
 
     </iframe>
   )
