@@ -20,12 +20,12 @@ const FileUpload = () => {
       file_key: string;
       file_name: string;
     }) => {
-      const response = await axios.post("/api/create-chats", {
+      const response = await axios.post("/api/create-chat", {
         file_key,
         file_name,
       });
       return response.data;
-    },
+    }
   });
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -42,21 +42,22 @@ const FileUpload = () => {
       try {
         setUploading(true);
         const data = await uploadToS3(file);
+        console.log("data coming from uploadToS3",data);
+
         if (!data?.file_key || !data?.file_name) {
           toast.error("Something went wrong while uploading");
           return;
         } else {
           mutate(data, {
             onSuccess: ({chat_id}) => {
-              toast.success("Chat Created");
-              
+              console.log("data from mutate ",data); 
+              toast.success("Chat Created")
               router.push(`/chat/${chat_id}`)
             },
-            onError: (err) => {
-              toast.error("Something went wrong while mutating");
-              console.log("Eroor from mutate ", err);
-            },
-          });
+            onError : (err) => {
+              console.log("mutation from ",err); 
+            }
+          })
         }
         console.log("data : ", data);
       } catch (error) {
