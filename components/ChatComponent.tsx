@@ -46,7 +46,7 @@ const ChatComponent = ({ chatId }: Props) => {
             onChange={handleInputChange}
             placeholder="Ask any question about pdf.."
           />
-          <Button className="bg-blue-600 ml-2">
+          <Button className="bg-[#6b6de2] ml-2">
             <Send className="h-4 w-4" />
           </Button>
         </div>
