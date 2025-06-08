@@ -38,12 +38,12 @@ export async function POST(req: Request) {
       `
 
 
-    const formattedMessages: Message[] = messages.map((msg: any) => ({
+    const formattedMessages: Message[] = messages.map((msg: Message) => ({
       role: msg.role,
       content:
         typeof msg.content === "string"
           ? msg.content
-          : msg.content?.[0]?.text || "", // Fallback for safety
+          : msg.content?.[0] || "", // Fallback for safety
     }));
 
     const result = streamText({
