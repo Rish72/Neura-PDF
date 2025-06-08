@@ -18,11 +18,10 @@ export async function uploadToS3(
       new PutObjectCommand({
         Bucket: process.env.NEXT_PUBLIC_S3_BUCKET_NAME!,
         Key: file_key,
-        Body: await file.arrayBuffer(), // Convert File to ArrayBuffer
+        Body: new Uint8Array(await file.arrayBuffer()), // Convert ArrayBuffer to Uint8Array
         ContentType: file.type, // Preserve MIME type
       })
     );
-
     return {
       file_key,
       file_name: file.name,
