@@ -15,8 +15,7 @@ type Props = {
   };
 };
 
-const ChatPage = async ({ params }: Props) => {
-  const { chatId } = await params;
+const ChatPage = async ({ params: { chatId } }: Props) => {
   const { userId } = await auth();
   
   if (!userId) {
