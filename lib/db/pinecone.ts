@@ -34,10 +34,10 @@ export async function load_S3Into_Pinecone(fileKey: string) {
 
   const loader = new PDFLoader(file_name);
   const pages = (await loader.load()) as PDFPage[];
+  
 
   // 2. splits and segmentation of pdf
   const documents = await Promise.all(pages.map(prepareDocument));
-  // console.log(documents);
 
   // 3. vectorise and embed individuals documents/
   const vectors = await Promise.all(documents.flat().map(embedDocument))

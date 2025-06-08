@@ -8,12 +8,13 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
 
   const {userId} = await auth()
-  console.log("route post request userId from clerk : ",userId);
+  console.log("route create chat post request userId from clerk : ",userId);
   
 
   if(!userId) return NextResponse.json({error : "Unauthorized"}, {status : 404})
   try {
     const body = await req.json();
+
     const { file_name, file_key } = body;
     console.log(
       "From post method of create-chats ",
@@ -41,4 +42,9 @@ export async function POST(req: Request) {
       status: 505,
     });
   }
+}
+
+export async function GET(req : Request) {
+  const {userId} = await auth()
+    return NextResponse.json({messsage : "THiis hit" , userId})
 }

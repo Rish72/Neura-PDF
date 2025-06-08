@@ -1,32 +1,3 @@
-// import { google } from '@ai-sdk/google';                // ✅ correct import
-// import { generateText } from 'ai';                        // ✅ correct import
-// import { NextResponse } from 'next/server';
-
-// export const runtime = 'edge';                          // ✅ enables edge deployment
-
-// export async function POST(req: Request) {
-//   try {
-//     const { messages } = await req.json();
-//     console.log("messages in api/chat route from req, json ",messages);
-//                  // ✅ expects { messages } from client
-
-//     const result = await generateText({                   // ✅ uses ai.streamText for streaming
-//       model: google('gemini-1.5-flash'),
-//       messages,                                         // ✅ message format is compatible with useChat
-//     });
-
-//     for await (const textPart of result.textStream) {
-//       console.log("test stream");
-
-//       console.log(textPart);
-//     }
-
-//     return NextResponse. result.toTextStreamResponse();
-//   } catch (error) {
-//     console.error('Error in /api/chat:', error);
-//     return new Response('Internal Server Error', { status: 500 }); // ✅ proper fallback
-//   }
-// }
 // api/chat/route.ts
 import { getContext } from "@/lib/context";
 import { db } from "@/lib/db";
@@ -75,14 +46,15 @@ export async function POST(req: Request) {
           : msg.content?.[0]?.text || "", // Fallback for safety
     }));
 
-    const result = await streamText({
+    const result = streamText({
       model: google("gemini-1.5-flash"),
       messages: formattedMessages, // Use the formatted messages here
       system : prompt,
       onError: (error) => {
         console.error("Error during streaming:", error);
       },
-    });
+    },
+  );
 
     console.log("Returning data stream response to client.");
 
