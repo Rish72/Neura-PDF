@@ -8,6 +8,7 @@ import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import React from "react";
 
+
 type Props = {
   params: {
     chatId: string;
@@ -15,7 +16,7 @@ type Props = {
 };
 
 const ChatPage = async ({ params }: Props) => {
-  const { chatId } = params;
+  const { chatId } = await params;
   const { userId } = await auth();
   
   if (!userId) {
