@@ -1,5 +1,6 @@
 # Neura PDF: AI-Powered Document Interaction
 
+![image](https://github.com/user-attachments/assets/70834be2-578e-40fe-a54d-716b4248ff40)
 Neura PDF is an innovative AI-powered web application that revolutionizes how users interact with their PDF documents. Upload your PDF files, and engage in a conversational chat to extract answers, summarize content, and gain insights directly from your documents.
 
 ## ✨ Features
@@ -51,17 +52,17 @@ Follow these steps to get your Neura PDF project up and running locally:
 ```bash
 git clone <your-repository-url>
 cd neura-pdf-project
-
-2. Install dependencies
-Bash
+```
+### 2. Install dependencies
+```bash
 
 npm install
 # or
 yarn install
+```
 
 
-
-3. Configure Environment Variables
+### 3. Configure Environment Variables
 Create a .env.local file in the root of your project and add the following environment variables. Ensure sensitive keys are NOT prefixed with NEXT_PUBLIC_ if used server-side.
 
 # Clerk Authentication
