@@ -31,7 +31,6 @@ const ChatPage = async ({ params }: Props) => {
   }
 
   const currentChat = _chats.find(chat => chat.id === parseInt(chatId))
-  console.log("currentchat url ",currentChat?.pdfUrl)
   return (
     <div className="flex h-screen overflow-hidden">
       <div className="flex w-full h-full">

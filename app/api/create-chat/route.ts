@@ -8,8 +8,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const { userId } = await auth();
-  console.log("route create chat post request userId from clerk : ", userId);
-
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); // Use 401 for Unauthorized
   }
@@ -17,7 +15,6 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const { file_name, file_key } = body;
-    console.log("From post method of create-chats ", file_key + " " + file_name);
 
     // 1. Insert chat metadata into DB immediately
     const insertedChat = await db.insert(chats).values({
@@ -35,18 +32,11 @@ export async function POST(req: Request) {
 
     const chatId = insertedChat[0].id; // Get the newly created chat ID
 
-    console.log("chat_id from db : ", typeof(chatId), chatId);
 
     // 2. Immediately return the chat_id to the client
     // This prevents the 504 timeout on the client-side
     const response = NextResponse.json({ chat_id: chatId }, { status: 200 });
 
-    // 3. Asynchronously trigger the long-running PDF processing
-    // DO NOT AWAIT load_S3Into_Pinecone here.
-    // This call will run in the background.
-    // However, be aware that in serverless environments, the function might
-    // terminate before this background task completes if it's too long.
-    // For reliable long tasks, consider Vercel Background Functions or a queue.
     Promise.resolve(load_S3Into_Pinecone(file_key))
       .then(() => console.log(`Background processing completed for file: ${file_key}`))
       .catch((bgError) => console.error(`Background processing failed for file: ${file_key}`, bgError));

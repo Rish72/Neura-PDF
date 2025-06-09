@@ -14,8 +14,8 @@ type Props = {
 const ChatSideBar = ({chats, chatId} : Props) => {
   return (
     <div className="w-full h-full p-6 text-gray-200 bg-[#061026]">
-      <Link href="/">
-        <Button className="w-full border-dashed border-white border">
+      <Link className="cursor-pointer" href="/">
+        <Button className="cursor-pointer w-full border-dashed border-white border">
           <PlusCircle className="mr-2 w-4 h-4" />
           New Chat
         </Button>
