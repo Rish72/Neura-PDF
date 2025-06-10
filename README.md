@@ -1,5 +1,6 @@
 # Neura PDF: AI-Powered Document Interaction
 
+![image](https://github.com/user-attachments/assets/70834be2-578e-40fe-a54d-716b4248ff40)
 Neura PDF is an innovative AI-powered web application that revolutionizes how users interact with their PDF documents. Upload your PDF files, and engage in a conversational chat to extract answers, summarize content, and gain insights directly from your documents.
 
 ## ✨ Features
@@ -51,57 +52,55 @@ Follow these steps to get your Neura PDF project up and running locally:
 ```bash
 git clone <your-repository-url>
 cd neura-pdf-project
-
-2. Install dependencies
-Bash
-
+```
+### 2. Install dependencies
+```bash
 npm install
 # or
 yarn install
+```
 
 
-
-3. Configure Environment Variables
+### 3. Configure Environment Variables
 Create a .env.local file in the root of your project and add the following environment variables. Ensure sensitive keys are NOT prefixed with NEXT_PUBLIC_ if used server-side.
 
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-CLERK_SECRET_KEY=your_clerk_secret_key
+   * #### Clerk Authentication
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+    CLERK_SECRET_KEY=your_clerk_secret_key
+   
+   * #### AWS S3 (Note: NEXT_PUBLIC_ for client-side uploads, if any)
+    NEXT_PUBLIC_S3_ACCESS_KEY_ID=your_s3_access_key_id
+    NEXT_PUBLIC_S3_SECRET_ACCESS_KEY=your_s3_secret_access_key
+    NEXT_PUBLIC_S3_BUCKET_NAME=your_s3_bucket_name
+    AWS_REGION=your_aws_region # e.g., ap-south-1
+   
+   * #### Google Gemini API
+    GEMINI_API_KEY=your_gemini_api_key
+   
+   * #### Pinecone
+    PINECONE_API_KEY=your_pinecone_api_key
+    PINECONE_ENVIRONMENT=your_pinecone_environment # or PINECONE_CLOUD/PINECONE_REGION
+   
+   * #### Database (Drizzle ORM)
+      DATABASE_URL="postgresql://user:password@host:port/database_name" # Your database connection string
 
-# AWS S3 (Note: NEXT_PUBLIC_ for client-side uploads, if any)
-NEXT_PUBLIC_S3_ACCESS_KEY_ID=your_s3_access_key_id
-NEXT_PUBLIC_S3_SECRET_ACCESS_KEY=your_s3_secret_access_key
-NEXT_PUBLIC_S3_BUCKET_NAME=your_s3_bucket_name
-AWS_REGION=your_aws_region # e.g., ap-south-1
 
-# Google Gemini API
-GEMINI_API_KEY=your_gemini_api_key
-
-# Pinecone
-PINECONE_API_KEY=your_pinecone_api_key
-PINECONE_ENVIRONMENT=your_pinecone_environment # or PINECONE_CLOUD/PINECONE_REGION
-
-# Database (Drizzle ORM)
-DATABASE_URL="postgresql://user:password@host:port/database_name" # Your database connection string
-
-
-4. Database Migrations (if using Drizzle)
+### 4. Database Migrations (if using Drizzle)
 Ensure your database schema is in sync. Refer to your Drizzle setup for migration commands (e.g., drizzle-kit push:pg).
 
 5. Run the application
-Bash
-
+```bash
 npm run dev
 # or
 yarn dev
-
-🚀 Deployment
+```
+## 🚀 Deployment
 This project is designed for deployment on Vercel. Ensure all environment variables are correctly configured in your Vercel project settings, paying close attention to the distinction between NEXT_PUBLIC_ and server-only variables.
 
 For handling long-running PDF processing tasks, consider implementing Vercel Background Functions or a Vercel Queue to avoid API timeouts.
 
-🤝 Contributing
+## 🤝 Contributing
 Contributions are welcome! Please feel free to open issues or submit pull requests.
 
-📄 License
+## 📄 License
 This project is open-source and available under the MIT License.
