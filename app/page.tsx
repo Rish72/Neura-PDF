@@ -6,11 +6,13 @@ import { auth } from "@clerk/nextjs/server";
 import { LogIn } from "lucide-react";
 import Link from "next/link";
 import NavBar from "@/components/NavBar";
-import { UserButton } from "@clerk/nextjs";
+// import { UserButton } from "@clerk/nextjs";
 import ImageComponent from "@/components/ImageComponent";
 import { chats } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
+import Header from "@/components/Header";
+import * as motion from "motion/react-client"
 
 export default async function Home() {
   const { userId } = await auth();
@@ -38,27 +40,20 @@ export default async function Home() {
 
       <div className="relative z-20 flex flex-col justify-center items-center h-screen p-3">
         <div className="flex flex-col items-center mt-5 text-center" id="main">
-          <div className="flex items-center flex-col">
-            <div className="flex items-center gap-2 mt-3">
-              <h1 className="mr-3 text-6xl font-bold mb-4 text-white">
-                Neura Ai
-              </h1>
-              <UserButton
-                appearance={{
-                  elements: {
-                    userButtonAvatarBox: {
-                      width: "2.5rem",
-                      height: "2.5rem",
-                    },
-                  },
-                }}
-              />
-            </div>
-            <h1 className="mr-3 text-6xl font-bold mb-4 text-white">
-              Query, Discover, Smart, Content.
-            </h1>
-          </div>
-          <div className="flex mt-2">
+          <Header />
+          <motion.div initial={{
+            y : 15,
+            opacity : 0,
+          }}
+          animate={{
+            y: 0, 
+            opacity : 1
+          }}  
+          transition={{
+            delay : 0.8,
+            duration: 0.5
+          }}
+          className="flex mt-2">
             {isAuth && (
               <Link href={`/chat/${firstChat?.id}`}>
                 <Button className="shadow-xl shadow-gray-700/10 mb-3 text-white cursor-pointer">
@@ -66,14 +61,38 @@ export default async function Home() {
                 </Button>
               </Link>
             )}
-          </div>
+          </motion.div>
 
-          <p className="max-w-2xl mt-2 text-[1rem]/6 text-slate-200">
+          <motion.p  initial={{
+            y : 15,
+            opacity : 0,
+          }}
+          animate={{
+            y: 0, 
+            opacity : 1
+          }} 
+          transition={{
+            delay : 0.8,
+            duration: 0.5
+          }}
+          className="max-w-2xl mt-2 text-[1rem]/6 text-slate-200">
             Tired of skimming? Neura helps students, researchers, and pros chat
             with PDFs for instant answers, crisp summaries, and cited insights.
-          </p>
+          </motion.p>
 
-          <div className="w-lg mt-4">
+          <motion.div initial={{
+            y : 15,
+            opacity : 0,
+          }}
+          animate={{
+            y: 0, 
+            opacity : 1
+          }} 
+          transition={{
+            delay : 0.8,
+            duration: 0.5
+          }}
+          className="w-lg mt-4" >
             {isAuth ? (
               <FileUpload />
             ) : (
@@ -84,7 +103,7 @@ export default async function Home() {
                 </Button>
               </Link>
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
       <ImageComponent />

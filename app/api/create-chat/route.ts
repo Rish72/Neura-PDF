@@ -17,14 +17,17 @@ export async function POST(req: Request) {
     const { file_name, file_key } = body;
 
     // 1. Insert chat metadata into DB immediately
-    const insertedChat = await db.insert(chats).values({
-      fileKey: file_key,
-      pdfName: file_name,
-      pdfUrl: getS3Url(file_key),
-      userId,
-    }).returning({
-      id: chats.id // Return the actual 'id' column from your schema
-    });
+    const insertedChat = await db
+      .insert(chats)
+      .values({
+        fileKey: file_key,
+        pdfName: file_name,
+        pdfUrl: getS3Url(file_key),
+        userId,
+      })
+      .returning({
+        id: chats.id, // Return the actual 'id' column from your schema
+      });
 
     if (!insertedChat || insertedChat.length === 0) {
       throw new Error("Failed to insert chat into database.");
@@ -32,22 +35,28 @@ export async function POST(req: Request) {
 
     const chatId = insertedChat[0].id; // Get the newly created chat ID
 
+    Promise.resolve(load_S3Into_Pinecone(file_key))
+      .then(() =>
+        console.log(`Background processing completed for file: ${file_key}`)
+      )
+      .catch((bgError) =>
+        console.error(
+          `Background processing failed for file: ${file_key}`,
+          bgError
+        )
+      );
 
-    // 2. Immediately return the chat_id to the client
-    // This prevents the 504 timeout on the client-side
     const response = NextResponse.json({ chat_id: chatId }, { status: 200 });
 
-    Promise.resolve(load_S3Into_Pinecone(file_key))
-      .then(() => console.log(`Background processing completed for file: ${file_key}`))
-      .catch((bgError) => console.error(`Background processing failed for file: ${file_key}`, bgError));
-
     return response; // Return the response immediately
-
   } catch (error) {
     console.error("Error in api/create-chat/: ", error);
-    return NextResponse.json({
-      error: "Failed to initiate chat creation.", // More generic error for client
-      details: (error as Error).message, // Add error message for debugging
-    }, { status: 500 }); // Use 500 for internal server error
+    return NextResponse.json(
+      {
+        error: "Failed to initiate chat creation.", // More generic error for client
+        details: (error as Error).message, // Add error message for debugging
+      },
+      { status: 500 }
+    ); // Use 500 for internal server error
   }
 }
